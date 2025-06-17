@@ -1,211 +1,304 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Job Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
 
-	<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-			crossorigin="anonymous">
-
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="style1.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --success-color: #10b981;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tech-stack-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+        
+        .tech-stack-container option {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            margin: 0.25rem 0;
+            transition: all 0.2s ease;
+        }
+        
+        .tech-stack-container option:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+            
+            .card {
+                margin: 0 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-briefcase me-2"></i>JobPortal Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="viewalljobs"><i class="fas fa-list me-1"></i> All Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://telusko.com/"><i class="fas fa-envelope me-1"></i> Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-warning">
-	<div class="container">
-		<a class="navbar-brand fs-1 fw-medium" href="#">Job Portal Web App</a>
-		<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false"
-				aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Post a New Job</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="handleForm" method="post">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="postId" class="form-label">
+                                            <i class="fas fa-id-card me-2"></i>Post ID
+                                        </label>
+                                        <input type="text" class="form-control" id="postId" name="postId" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="postProfile" class="form-label">
+                                            <i class="fas fa-user-tie me-2"></i>Post Profile
+                                        </label>
+                                        <input type="text" class="form-control" id="postProfile" name="postProfile" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="postDesc" class="form-label">
+                                            <i class="fas fa-align-left me-2"></i>Post Description
+                                        </label>
+                                        <textarea class="form-control" id="postDesc" name="postDesc" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="reqExperience" class="form-label">
+                                            <i class="fas fa-business-time me-2"></i>Required Experience (years)
+                                        </label>
+                                        <input type="number" class="form-control" id="reqExperience" name="reqExperience" min="0" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="postTechStack" class="form-label">
+                                            <i class="fas fa-code me-2"></i>Tech Stack (Select multiple)
+                                        </label>
+                                        <div class="tech-stack-container">
+                                            <select multiple class="form-select" id="postTechStack" name="postTechStack" required>
+                                                <option value="Java">Java</option>
+                                                <option value="JavaScript">JavaScript</option>
+                                                <option value="Python">Python</option>
+                                                <option value="C++">C++</option>
+                                                <option value="C#">C#</option>
+                                                <option value="Ruby">Ruby</option>
+                                                <option value="Swift">Swift</option>
+                                                <option value="TypeScript">TypeScript</option>
+                                                <option value="Go">Go</option>
+                                                <option value="Kotlin">Kotlin</option>
+                                                <option value="Rust">Rust</option>
+                                                <option value="PHP">PHP</option>
+                                                <option value="HTML5">HTML5</option>
+                                                <option value="CSS3">CSS3</option>
+                                                <option value="React">React</option>
+                                                <option value="Angular">Angular</option>
+                                                <option value="Vue.js">Vue.js</option>
+                                                <option value="Node.js">Node.js</option>
+                                                <option value="Express.js">Express.js</option>
+                                                <option value="Django">Django</option>
+                                                <option value="Flask">Flask</option>
+                                                <option value="Ruby on Rails">Ruby on Rails</option>
+                                                <option value="Laravel">Laravel</option>
+                                                <option value="Spring Boot">Spring Boot</option>
+                                                <option value="TensorFlow">TensorFlow</option>
+                                                <option value="PyTorch">PyTorch</option>
+                                                <option value="Kubernetes">Kubernetes</option>
+                                                <option value="Docker">Docker</option>
+                                                <option value="AWS">AWS</option>
+                                                <option value="Azure">Azure</option>
+                                                <option value="Google Cloud">Google Cloud</option>
+                                                <option value="SQL">SQL</option>
+                                                <option value="MongoDB">MongoDB</option>
+                                                <option value="PostgreSQL">PostgreSQL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane me-2"></i>Submit Job Posting
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ms-auto">
-				<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="viewalljobs">All Jobs</a></li>
-				<li class="nav-item"><a class="nav-link" href="https://telusko.com/">Contact</a></li>
-			</ul>
-		</div>
-	</div>
-</nav>
-
-
-<div class="container mt-5">
-	<div class="row justify-content-center">
-		<div class="col-md-6">
-			<div class="card">
-				<div class="card-body">
-					<h2 class="mb-3 text-center fs-3 font-weight-bold">Post a
-						new Job</h2>
-					<form action="handleForm" method="post">
-						<div class="mb-1">
-							<label for="postId" class="form-label">Post ID</label>
-							<input type="text" class="form-control" id="postId"
-								   name="postId" required>
-						</div>
-
-						<div class="mb-1">
-							<label for="postProfile" class="form-label">Post Profile</label>
-							<input type="text" class="form-control" id="postProfile" name="postProfile" required>
-						</div>
-
-
-						<div class="mb-1">
-							<label for="postDesc" class="form-label">Post Description</label>
-							<textarea class="form-control" id="postDesc" name="postDesc" rows="2" required></textarea>
-						</div>
-
-
-						<div class="mb-1">
-							<label for="reqExperience" class="form-label">Required
-								Experience</label>
-							<input type="number" class="form-control" id="reqExperience" name="reqExperience" required>
-						</div>
-
-
-						<div class="mb-2">
-							<label for="postTechStack" class="form-label">Tech Stack</label>
-							<select multiple class="form-select" id="postTechStack" name="postTechStack" required>
-								<option value="Java">Java</option>
-								<option value="JavaScript">JavaScript</option>
-								<!-- Additional options -->
-								<option value="Swift">Swift</option>
-								<option value="TypeScript">TypeScript</option>
-								<option value="Go">Go</option>
-								<option value="Kotlin">Kotlin</option>
-								<option value="Rust">Rust</option>
-								<option value="PHP">PHP</option>
-								<option value="HTML5">HTML5</option>
-								<option value="CSS3">CSS3</option>
-								<option value="GraphQL">GraphQL</option>
-								<option value="Raspberry Pi">Raspberry Pi</option>
-								<option value="Arduino">Arduino</option>
-								<option value="IoT (Internet of Things)">IoT (Internet
-									of Things)</option>
-								<option value="Apache Kafka">Apache Kafka</option>
-								<option value="Elasticsearch">Elasticsearch</option>
-								<option value="Unity">Unity</option>
-								<option value="Game Development">Game Development</option>
-								<option value="Vue.js">Vue.js</option>
-								<option value="Angular">Angular</option>
-								<option value="React Native">React Native</option>
-								<option value="Flutter">Flutter</option>
-								<option value="Node.js">Node.js</option>
-								<option value="Express.js">Express.js</option>
-								<option value="Django">Django</option>
-								<option value="Flask">Flask</option>
-								<option value="Ruby on Rails">Ruby on Rails</option>
-								<option value="Laravel">Laravel</option>
-								<option value="TensorFlow">TensorFlow</option>
-								<option value="PyTorch">PyTorch</option>
-								<option value="Kubernetes">Kubernetes</option>
-								<option value="Docker">Docker</option>
-								<option value="Jenkins">Jenkins</option>
-								<option value="AWS (Amazon Web Services)">AWS (Amazon
-									Web Services)</option>
-								<option value="Azure">Azure</option>
-								<option value="Google Cloud">Google Cloud</option>
-								<option value="DevOps">DevOps</option>
-								<option value="Blockchain">Blockchain</option>
-								<option value="Machine Learning">Machine Learning</option>
-								<option value="Artificial Intelligence">Artificial
-									Intelligence</option>
-								<option value="Cybersecurity">Cybersecurity</option>
-								<option
-										value="CISSP (Certified Information Systems Security Professional)">CISSP
-									(Certified Information Systems Security Professional)</option>
-								<option value="CompTIA Security+">CompTIA Security+</option>
-								<option value="Certified Ethical Hacker (CEH)">Certified
-									Ethical Hacker (CEH)</option>
-								<option value="Scrum">Scrum</option>
-								<option value="Agile">Agile</option>
-								<option value="Kanban">Kanban</option>
-								<option value="GraphQL">GraphQL</option>
-								<option value="Vue.js">Vue.js</option>
-								<option value="Angular">Angular</option>
-								<option value="React Native">React Native</option>
-								<option value="Flutter">Flutter</option>
-								<option value="Node.js">Node.js</option>
-								<option value="Express.js">Express.js</option>
-								<option value="Django">Django</option>
-								<option value="Flask">Flask</option>
-								<option value="Ruby on Rails">Ruby on Rails</option>
-								<option value="Laravel">Laravel</option>
-								<option value="TensorFlow">TensorFlow</option>
-								<option value="PyTorch">PyTorch</option>
-								<option value="Kubernetes">Kubernetes</option>
-								<option value="Docker">Docker</option>
-								<option value="Jenkins">Jenkins</option>
-								<option value="AWS (Amazon Web Services)">AWS (Amazon
-									Web Services)</option>
-								<option value="Azure">Azure</option>
-								<option value="Google Cloud">Google Cloud</option>
-								<option value="DevOps">DevOps</option>
-								<option value="Blockchain">Blockchain</option>
-								<option value="Machine Learning">Machine Learning</option>
-								<option value="Artificial Intelligence">Artificial
-									Intelligence</option>
-								<option value="Cybersecurity">Cybersecurity</option>
-								<option
-										value="CISSP (Certified Information Systems Security Professional)">CISSP
-									(Certified Information Systems Security Professional)</option>
-								<option value="CompTIA Security+">CompTIA Security+</option>
-								<option value="Certified Ethical Hacker (CEH)">Certified
-									Ethical Hacker (CEH)</option>
-								<option value="Scrum">Scrum</option>
-								<option value="Agile">Agile</option>
-								<option value="Kanban">Kanban</option>
-								<option value="GraphQL">GraphQL</option>
-								<option value="Raspberry Pi">Raspberry Pi</option>
-								<option value="Arduino">Arduino</option>
-								<option value="IoT (Internet of Things)">IoT (Internet
-									of Things)</option>
-								<option value="Apache Kafka">Apache Kafka</option>
-								<option value="Elasticsearch">Elasticsearch</option>
-								<option value="Unity">Unity</option>
-								<option value="Game Development">Game Development</option>
-								<option value="Swift">Swift</option>
-								<option value="TypeScript">TypeScript</option>
-								<option value="Go">Go</option>
-								<option value="Kotlin">Kotlin</option>
-								<option value="Rust">Rust</option>
-								<option value="PHP">PHP</option>
-								<option value="HTML5">HTML5</option>
-								<option value="CSS3">CSS3</option>
-								<option value="GraphQL">GraphQL</option>
-								<option value="Raspberry Pi">Raspberry Pi</option>
-								<option value="Arduino">Arduino</option>
-								<option value="IoT (Internet of Things)">IoT (Internet
-									of Things)</option>
-								<option value="Apache Kafka">Apache Kafka</option>
-								<option value="Elasticsearch">Elasticsearch</option>
-								<option value="Unity">Unity</option>
-								<option value="Game Development">Game Development</option>
-							</select>
-						</div>
-
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add active class to current nav item
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const currentUrl = window.location.pathname.split('/').pop() || 'home';
+            
+            navLinks.forEach(link => {
+                const linkUrl = link.getAttribute('href');
+                if (linkUrl === currentUrl) {
+                    link.classList.add('active');
+                    link.style.color = 'white';
+                    link.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                }
+            });
+            
+            // Enhance multiple select
+            const techStackSelect = document.getElementById('postTechStack');
+            if (techStackSelect) {
+                techStackSelect.addEventListener('focus', function() {
+                    this.size = 6; // Show 6 options when focused
+                });
+                
+                techStackSelect.addEventListener('blur', function() {
+                    this.size = 1;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
